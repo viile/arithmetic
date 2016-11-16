@@ -52,12 +52,9 @@ class Operation : Expression
 	override public float Evaluate(string[string] vars)  
 	{  
 		auto x = left.Evaluate(vars);  
-		writeln("x:",x);
 		auto y = right.Evaluate(vars);  
-		writeln("y:",y);
 		final switch (op)  
 		{  
-			writeln(x," ",op ," ",y);
 			case '+':return x + y;  
 			case '-':return x - y;  
 			case '*':return x * y;  
@@ -104,26 +101,16 @@ Expression strToTree(string str,int s,int t)
 		} 
 	}
 	auto ops = ["+","-","*","/"];
+	int ts = s;
+	while(ts <= t)
+	{
+		if(canFind(ops,str[ts].to!string))break;
+		ts++;
+	}
 	if (findLetter == false && findChar == false)  
-	{
-		int ts = s;
-		while(ts <= t)
-		{
-			if(canFind(ops,str[ts].to!string))break;
-			ts++;
-		}
 		return new Constant(str[s .. ts ].to!float);  
-	}
 	if (findChar == false)
-	{
-		int ts = s;
-		while(ts <= t)
-		{
-			if(canFind(ops,str[ts].to!string))break;
-			ts++;
-		}
 		return new VariableReference(str[s.. ts]);  
-	}
 	if (lastPS == -1)  
 		lastPS = lastMD;  
 	return new Operation(strToTree(str, s, lastPS - 1 ), str[lastPS], strToTree(str, lastPS + 1,t));
