@@ -2,13 +2,10 @@ import std.stdio;
 import std.conv;
 import std.algorithm;
 
-class Expression
+abstract class Expression
 {
 	public string[string] vars;
-	public float Evaluate(string[string] vars)
-	{
-		return 0;
-	}
+	public float Evaluate(string[string] vars);
 }
 
 class Constant : Expression
